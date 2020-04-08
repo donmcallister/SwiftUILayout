@@ -12,9 +12,23 @@ struct ContentView: View {
     var body: some View {
         VStack {
             EventHeader()
+            ImagePlaceholder()
+                .layoutPriority(-1)
+                .frame(minHeight: 100)
+            Text(makeDescription()) //.layoutPriority(1)
+//            Text("This is a description")
             Spacer()
-            EventInfoList()
+            EventInfoList().layoutPriority(1)
         }.padding()
+    }
+}
+
+struct ImagePlaceholder: View {
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 10).stroke()
+            Text("Image placeholder")
+        }
     }
 }
 
@@ -146,6 +160,11 @@ extension View {
     }
 }
 
+private extension ContentView {
+    func makeDescription() -> String {
+        String(repeating: "This is a description ", count: 50)
+    }
+}
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
