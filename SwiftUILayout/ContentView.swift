@@ -18,7 +18,8 @@ struct ContentView: View {
             Text(makeDescription()) //.layoutPriority(1)
 //            Text("This is a description")
             Spacer()
-            EventInfoList().layoutPriority(1)
+            EventInfoList().fixedSize(horizontal: false, vertical: true)
+                //.layoutPriority(1)
         }.padding()
     }
 }
@@ -154,8 +155,29 @@ extension View {
             
             if isVerified {
                 Image(systemName: "checkmark.circle.fill")
-                .offset(x: 3, y: -3)
+                    .alignAsBadge()
+//  .offset(x: 3, y: -3)
+//  .alignmentGuide(HorizontalAlignment.trailing) { $0[HorizontalAlignment.center] }
+//  .alignmentGuide(VerticalAlignment.top) { $0[VerticalAlignment.center] }
+//                    .alignmentGuide(HorizontalAlignment.trailing) { $0.width * 0.8 }
+//                    .alignmentGuide(VerticalAlignment.top)
+//                        // Here we first align our view's bottom edge
+//                        // according to its host view's top edge,
+//                        // and we then subtract 80% of its height.
+//                        { $0[.bottom] - $0.height * 0.8 }
+                
             }
+        }
+    }
+    
+    func alignAsBadge(withRatio ratio: CGFloat = 0.8, alignment: Alignment = .topTrailing) -> some View {
+        
+        alignmentGuide(HorizontalAlignment.trailing) {
+            $0.width * 0.8
+            }
+            
+        .alignmentGuide(VerticalAlignment.top) {
+            $0[.bottom] - $0.height * 0.8
         }
     }
 }
